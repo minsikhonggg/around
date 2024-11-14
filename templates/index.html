@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory Management</title>
+</head>
+<body>
+    <h1>Inventory Management System</h1>
+    
+    <form action="/add_item" method="post">
+        <label for="item_name">Item Name:</label>
+        <input type="text" id="item_name" name="item_name" required><br><br>
+        
+        <label for="current_stock">Current Stock:</label>
+        <input type="number" id="current_stock" name="current_stock" step="any" required><br><br>
+        
+        <label for="daily_usage">Daily Average Usage:</label>
+        <input type="number" id="daily_usage" name="daily_usage" step="any" required><br><br>
+        
+        <label for="unit">Unit (e.g., pieces, L):</label>
+        <input type="text" id="unit" name="unit" required><br><br>
+        
+        <label for="alert_days_before">Alert Days Before Out of Stock:</label>
+        <input type="number" id="alert_days_before" name="alert_days_before" required><br><br>
+        
+        <button type="submit">Add Item</button>
+    </form>
+    
+    <div class="inventory-list">
+        <h2>Registered Items</h2>
+        {% for name, item in inventory.items() %}
+            <p><strong>{{ name }}</strong> - Current Stock: {{ item.current_stock }} {{ item.unit }}, Daily Usage: {{ item.daily_usage }} {{ item.unit }}, Last Update: {{ item.last_update }}</p>
+            <a href="{{ url_for('predict', item_name=name) }}">View Consumption Forecast</a>
+        {% endfor %}
+    </div>
+</body>
+</html>
